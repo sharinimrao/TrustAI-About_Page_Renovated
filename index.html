@@ -102,7 +102,7 @@
   }
   .section-num {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 13px;
+    font-size: 17px;
     color: var(--teal);
     font-weight: 600;
   }
@@ -112,6 +112,13 @@
     letter-spacing: 0.14em;
     color: var(--ink-soft);
     font-weight: 600;
+  }
+  .section-head--lg h2 {
+    font-size: 32px;
+    text-transform: none;
+    letter-spacing: normal;
+    color: var(--ink);
+    font-weight: 700;
   }
   .founders-grid {
     display: grid;
@@ -127,9 +134,9 @@
   }
   .founder-card:hover { border-color: var(--teal); }
   .founder-photo {
-    width: 64px;
-    height: 64px;
-    border-radius: 50%;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    border-radius: 12px;
     background: var(--teal-soft);
     border: 1px solid var(--line);
     display: flex;
@@ -138,7 +145,7 @@
     font-family: 'IBM Plex Mono', monospace;
     font-weight: 600;
     color: var(--teal);
-    font-size: 15px;
+    font-size: 32px;
     margin-bottom: 20px;
   }
   .founder-card h3 { font-size: 19px; font-weight: 700; margin-bottom: 4px; }
@@ -160,6 +167,7 @@
     color: #1a1a1a;
   }
   .prose a { color: var(--teal); }
+  .prose .highlight { font-weight: 700; color: var(--ink); }
   .advisors {
     margin-top: 20px;
     font-size: 15px;
@@ -235,7 +243,7 @@
 </section>
 
 <section>
-  <div class="section-head">
+  <div class="section-head section-head--lg">
     <span class="section-num">00</span>
     <h2>Founders</h2>
   </div>
@@ -256,12 +264,12 @@
 </section>
 
 <section>
-  <div class="section-head">
+  <div class="section-head section-head--lg">
     <span class="section-num">01</span>
     <h2>Team</h2>
   </div>
   <p class="prose">
-    TrustAI is built by five MIT engineers and researchers with backgrounds at Google DeepMind, Jane Street, SpaceX, MIT Lincoln Laboratory, and CSAIL. The team includes International Physics and Astronomy Olympiad medalists, with published work at NeurIPS and ICML.
+    TrustAI is built by five MIT engineers and researchers with backgrounds at <span class="highlight">Google DeepMind</span>, <span class="highlight">Jane Street</span>, <span class="highlight">SpaceX</span>, <span class="highlight">MIT Lincoln Laboratory</span>, and <span class="highlight">CSAIL</span>. The team includes <span class="highlight">International Physics and Astronomy Olympiad medalists</span>, with published work at <span class="highlight">NeurIPS</span> and <span class="highlight">ICML</span>.
   </p>
   <p class="advisors">
     Advised by <a href="https://vllm.ai/" target="_blank" rel="noopener">vLLM</a> lead at Red Hat AI, <a href="https://www.linkedin.com/in/robert-shaw-1a01399a/" target="_blank" rel="noopener">Robert Shaw</a>, and a Google Distinguished Engineer in AI Infrastructure.
@@ -269,7 +277,7 @@
 </section>
 
 <section>
-  <div class="section-head">
+  <div class="section-head section-head--lg">
     <span class="section-num">02</span>
     <h2>Vision</h2>
   </div>
@@ -279,7 +287,7 @@
 </section>
 
 <section style="border-bottom: none;">
-  <div class="section-head">
+  <div class="section-head section-head--lg">
     <span class="section-num">03</span>
     <h2>Mission</h2>
   </div>

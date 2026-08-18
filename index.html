@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>About TrustAI | Portable context for AI inference</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #000000;
+    --paper: #ffffff;
+    --teal: #377e7f;
+    --teal-soft: #e9f1f1;
+    --line: #e3e6ea;
+    --ink-soft: #545b63;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Geist', ui-sans-serif, system-ui, sans-serif;
+    color: var(--ink);
+    background: var(--paper);
+    line-height: 1.5;
+  }
+  .mono { font-family: 'IBM Plex Mono', ui-monospace, monospace; }
+
+  /* Nav */
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 48px;
+    border-bottom: 1px solid var(--line);
+  }
+  .wordmark { font-weight: 800; font-size: 18px; letter-spacing: -0.01em; }
+  nav { display: flex; gap: 32px; font-size: 14px; }
+  nav a { color: var(--ink); text-decoration: none; }
+  nav a.active { color: var(--teal); font-weight: 600; }
+  .book-demo {
+    border: 1px solid var(--ink);
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--ink);
+  }
+
+  /* Hero */
+  .hero {
+    position: relative;
+    overflow: hidden;
+    background: var(--teal);
+    color: white;
+    padding: 96px 48px 120px;
+  }
+  .hero-inner { position: relative; z-index: 2; max-width: 760px; }
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    opacity: 0.75;
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-weight: 800;
+    font-size: 64px;
+    line-height: 0.98;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+  .hero p {
+    font-size: 19px;
+    max-width: 560px;
+    opacity: 0.92;
+    line-height: 1.6;
+  }
+  .facts {
+    display: flex;
+    gap: 48px;
+    margin-top: 48px;
+  }
+  .fact-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.65;
+    margin-bottom: 6px;
+  }
+  .fact-value { font-size: 17px; font-weight: 600; }
+  .lines { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+
+  /* Founders */
+  section { padding: 88px 48px; border-bottom: 1px solid var(--line); }
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+  .section-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--teal);
+    font-weight: 600;
+  }
+  .section-head h2 {
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--ink-soft);
+    font-weight: 600;
+  }
+  .founders-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 32px;
+    max-width: 780px;
+  }
+  .founder-card {
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 28px;
+    transition: border-color 0.15s;
+  }
+  .founder-card:hover { border-color: var(--teal); }
+  .founder-photo {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--teal-soft);
+    border: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 600;
+    color: var(--teal);
+    font-size: 15px;
+    margin-bottom: 20px;
+  }
+  .founder-card h3 { font-size: 19px; font-weight: 700; margin-bottom: 4px; }
+  .founder-card h3 a { color: var(--ink); text-decoration: none; }
+  .founder-role {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--teal);
+    letter-spacing: 0.05em;
+    margin-bottom: 10px;
+  }
+  .founder-bg { font-size: 14px; color: var(--ink-soft); }
+
+  /* Team / Vision / Mission */
+  .prose {
+    max-width: 680px;
+    font-size: 19px;
+    line-height: 1.65;
+    color: #1a1a1a;
+  }
+  .prose a { color: var(--teal); }
+  .advisors {
+    margin-top: 20px;
+    font-size: 15px;
+    color: var(--ink-soft);
+    max-width: 680px;
+  }
+  .advisors a { color: var(--teal); text-decoration: underline; }
+
+  footer {
+    padding: 40px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+
+  @media (max-width: 720px) {
+    header, .hero, section, footer { padding-left: 24px; padding-right: 24px; }
+    nav { display: none; }
+    .hero h1 { font-size: 40px; }
+    .founders-grid { grid-template-columns: 1fr; }
+    .facts { flex-direction: column; gap: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wordmark">Trust<span style="color:var(--teal)">AI</span></div>
+  <nav>
+    <a href="#">Models</a>
+    <a href="#">Demo</a>
+    <a href="#">Research</a>
+    <a href="#" class="active">About us</a>
+    <a href="#">Pricing</a>
+    <a href="#">Privacy &amp; Terms</a>
+  </nav>
+  <a class="book-demo" href="#">Book a demo ↗</a>
+</header>
+
+<section class="hero" style="border-bottom:none; padding-bottom:120px;">
+  <svg class="lines" viewBox="0 0 1400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <g stroke="rgba(255,255,255,0.28)" stroke-width="1.5" fill="none">
+      <path d="M1080 30 L 1280 220 L 1000 300" />
+      <path d="M1280 220 L 1180 440" />
+      <path d="M1000 300 L 1180 440 L 880 500" />
+      <path d="M1080 30 L 1000 300" />
+      <path d="M1280 220 L 1400 120" />
+    </g>
+    <g fill="rgba(255,255,255,0.9)">
+      <circle cx="1080" cy="30" r="3" />
+      <circle cx="1280" cy="220" r="3" />
+      <circle cx="1000" cy="300" r="3" />
+      <circle cx="1180" cy="440" r="3" />
+    </g>
+  </svg>
+  <div class="hero-inner">
+    <div class="eyebrow">About TrustAI</div>
+    <h1>Portable context<br>for AI inference.</h1>
+    <p>We optimize prefilling computation so companies get the cheapest and fastest inference available — without paying to recompute what a model already knows.</p>
+    <div class="facts">
+      <div>
+        <div class="fact-label">Focus</div>
+        <div class="fact-value">Portable context</div>
+      </div>
+      <div>
+        <div class="fact-label">Built for</div>
+        <div class="fact-value">Multi-model inference</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-head">
+    <span class="section-num">00</span>
+    <h2>Founders</h2>
+  </div>
+  <div class="founders-grid">
+    <div class="founder-card">
+      <div class="founder-photo">MV</div>
+      <h3><a href="https://www.linkedin.com/in/medhav/" target="_blank" rel="noopener">Medha Venkatapathy ↗</a></h3>
+      <div class="founder-role">CTO</div>
+      <div class="founder-bg">Physics + CS @ MIT</div>
+    </div>
+    <div class="founder-card">
+      <div class="founder-photo">HC</div>
+      <h3><a href="https://www.linkedin.com/in/hannahchung1/" target="_blank" rel="noopener">Hannah Chung ↗</a></h3>
+      <div class="founder-role">CEO</div>
+      <div class="founder-bg">CS + Business @ MIT</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-head">
+    <span class="section-num">01</span>
+    <h2>Team</h2>
+  </div>
+  <p class="prose">
+    TrustAI is built by five MIT engineers and researchers with backgrounds at Google DeepMind, Jane Street, SpaceX, MIT Lincoln Laboratory, and CSAIL. The team includes International Physics and Astronomy Olympiad medalists, with published work at NeurIPS and ICML.
+  </p>
+  <p class="advisors">
+    Advised by <a href="https://vllm.ai/" target="_blank" rel="noopener">vLLM</a> lead at Red Hat AI, <a href="https://www.linkedin.com/in/robert-shaw-1a01399a/" target="_blank" rel="noopener">Robert Shaw</a>, and a Google Distinguished Engineer in AI Infrastructure.
+  </p>
+</section>
+
+<section>
+  <div class="section-head">
+    <span class="section-num">02</span>
+    <h2>Vision</h2>
+  </div>
+  <p class="prose">
+    Any model should be able to pick up where another left off. We're building toward AI systems that move context across models without recomputing it — making inference faster, cheaper, and more capable with every hop.
+  </p>
+</section>
+
+<section style="border-bottom: none;">
+  <div class="section-head">
+    <span class="section-num">03</span>
+    <h2>Mission</h2>
+  </div>
+  <p class="prose">
+    Make computed context transferable across the open-weight ecosystem. We build infrastructure that transfers state between models, so teams can use the best model for every task without paying the prefill cost twice — delivering inference at a fraction of the cost and time-to-first-token.
+  </p>
+</section>
+
+<footer>
+  <span>© 2026 TrustAI</span>
+  <span class="mono">Backed by Combinator</span>
+</footer>
+
+</body>
+</html>

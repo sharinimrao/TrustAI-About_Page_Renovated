@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>About TrustAI | Portable context for AI inference</title>
+<title>About TrustAI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -11,12 +11,14 @@
     --ink: #000000;
     --paper: #ffffff;
     --teal: #377e7f;
-    --teal-deep: #306f70;
     --teal-soft: #e9f1f1;
     --line: #e3e6ea;
-    --ink-soft: #545b63;
+    --ink-soft: #54595e;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
   body {
     font-family: 'Geist', ui-sans-serif, system-ui, sans-serif;
     color: var(--ink);
@@ -24,18 +26,23 @@
     line-height: 1.5;
   }
   .mono { font-family: 'IBM Plex Mono', ui-monospace, monospace; }
+  a { color: inherit; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; }
 
   /* Nav */
   header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 20px 48px;
+    padding: 20px 40px;
     border-bottom: 1px solid var(--line);
+    position: relative;
+    z-index: 5;
+    background: var(--paper);
   }
   .wordmark { font-weight: 800; font-size: 18px; letter-spacing: -0.01em; }
   nav { display: flex; gap: 32px; font-size: 14px; }
-  nav a { color: var(--ink); text-decoration: none; }
+  nav a { text-decoration: none; }
   nav a.active { color: var(--teal); font-weight: 600; }
   .book-demo {
     border: 1px solid var(--ink);
@@ -44,170 +51,168 @@
     font-size: 14px;
     font-weight: 600;
     text-decoration: none;
-    color: var(--ink);
+  }
+  .book-demo:hover { background: var(--ink); color: var(--paper); }
+
+  /* Two-column sticky layout */
+  .layout {
+    display: flex;
+    align-items: flex-start;
   }
 
-  /* Hero */
-  .hero {
-    position: relative;
-    overflow: hidden;
+  /* Left: pinned teal panel */
+  .hero-panel {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    flex: 0 0 44%;
+    max-width: 560px;
     background: var(--teal);
     color: white;
-    padding: 96px 48px 120px;
+    padding: 64px 56px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
   }
-  .hero-inner { position: relative; z-index: 2; max-width: 760px; }
+  .facet { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+  .hero-content { position: relative; z-index: 1; }
   .eyebrow {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 12px;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     opacity: 0.75;
-    margin-bottom: 20px;
+    margin-bottom: 22px;
   }
-  .hero h1 {
-    font-weight: 800;
-    font-size: 64px;
-    line-height: 0.98;
-    letter-spacing: -0.02em;
-    margin-bottom: 24px;
+  .hero-content h1 {
+    font-weight: 700;
+    font-size: 34px;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+    margin-bottom: 44px;
   }
-  .hero p {
-    font-size: 19px;
-    max-width: 560px;
-    opacity: 0.92;
-    line-height: 1.6;
-  }
-  .facts {
+  .stat-list { display: flex; flex-direction: column; gap: 20px; }
+  .stat-row {
     display: flex;
-    gap: 40px;
-    margin-top: 48px;
-    width: fit-content;
-    border: 1px solid rgba(255,255,255,0.35);
-    background: rgba(255,255,255,0.08);
-    border-radius: 10px;
-    padding: 18px 26px;
+    align-items: baseline;
+    gap: 14px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(255,255,255,0.25);
   }
-  .fact-label {
+  .stat-label {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 11px;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     opacity: 0.65;
-    margin-bottom: 6px;
+    width: 92px;
+    flex-shrink: 0;
   }
-  .fact-value { font-size: 17px; font-weight: 600; }
-  .hero-texture {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    pointer-events: none;
-    background-image: radial-gradient(rgba(255,255,255,0.16) 1px, transparent 1px);
-    background-size: 20px 20px;
-    -webkit-mask-image: radial-gradient(ellipse 65% 90% at 82% 45%, black 10%, transparent 72%);
-    mask-image: radial-gradient(ellipse 65% 90% at 82% 45%, black 10%, transparent 72%);
-  }
+  .stat-value { font-size: 16px; font-weight: 600; }
 
-  /* Founders */
-  section { padding: 88px 48px; border-bottom: 1px solid var(--line); }
-  .section-head {
+  /* Right: scrolling entries */
+  .content-col { flex: 1; min-width: 0; }
+  .entry {
+    padding: 96px 64px 96px 56px;
+    border-bottom: 1px solid var(--line);
+    max-width: 680px;
+  }
+  .entry:last-child { border-bottom: none; }
+  .entry-head {
     display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 48px;
+    align-items: baseline;
+    gap: 18px;
+    margin-bottom: 28px;
   }
-  .section-num {
-    display: inline-flex;
-    color: var(--teal);
-  }
-  .section-num svg { display: block; width: 26px; height: 20px; }
-  .section-head h2 {
+  .entry-num {
+    font-family: 'IBM Plex Mono', monospace;
     font-size: 15px;
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    color: var(--ink-soft);
     font-weight: 600;
+    color: var(--teal);
+    letter-spacing: 0.05em;
   }
-  .section-head--lg h2 {
-    font-size: 32px;
-    text-transform: none;
-    letter-spacing: normal;
-    color: var(--ink);
+  .entry-head h2 {
+    font-size: 30px;
     font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .entry p {
+    font-size: 18px;
+    line-height: 1.65;
+    color: #1a1a1a;
+  }
+  .entry .highlight { font-weight: 700; color: var(--ink); }
+  .entry .advisors {
+    margin-top: 20px;
+    font-size: 14px;
+    color: var(--ink-soft);
+  }
+  .entry .advisors a { color: var(--teal); text-decoration: underline; }
+
+  /* Founders — teal bookend section */
+  .founders-section {
+    position: relative;
+    background: var(--teal);
+    color: white;
+    padding: 96px 56px;
+    overflow: hidden;
+  }
+  .founders-facet { position: absolute; top: 0; right: 0; width: 340px; height: 340px; opacity: 0.9; pointer-events: none; }
+  .founders-section .section-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    opacity: 0.75;
+    margin-bottom: 40px;
+    position: relative;
+    z-index: 1;
   }
   .founders-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 32px;
-    max-width: 780px;
+    gap: 28px;
+    max-width: 760px;
+    position: relative;
+    z-index: 1;
   }
   .founder-card {
-    background: var(--teal-deep);
-    border: 1px solid var(--teal-deep);
+    background: var(--paper);
+    color: var(--ink);
     border-radius: 16px;
-    padding: 28px;
-    transition: border-color 0.15s;
+    padding: 26px;
   }
-  .founder-card:hover { border-color: rgba(255,255,255,0.5); }
   .founder-photo {
     width: 100%;
     aspect-ratio: 4 / 3;
     border-radius: 12px;
-    background: rgba(255,255,255,0.22);
-    border: 1px solid rgba(255,255,255,0.4);
+    background: var(--teal-soft);
+    border: 1px solid var(--line);
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: 'IBM Plex Mono', monospace;
     font-weight: 600;
-    color: rgba(255,255,255,0.9);
-    font-size: 32px;
-    margin-bottom: 20px;
+    color: var(--teal);
+    font-size: 30px;
+    margin-bottom: 18px;
   }
-  .founder-card h3 { font-size: 19px; font-weight: 700; margin-bottom: 4px; }
-  .founder-card h3 a { color: white; text-decoration: none; }
+  .founder-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+  .founder-card h3 a { text-decoration: none; }
+  .founder-card h3 a:hover { text-decoration: underline; }
   .founder-role {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 12px;
-    color: rgba(255,255,255,0.85);
+    color: var(--teal);
     letter-spacing: 0.05em;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
   }
-  .founder-bg { font-size: 14px; color: rgba(255,255,255,0.7); }
-
-  /* Team / Vision / Mission */
-  .prose {
-    max-width: 680px;
-    font-size: 19px;
-    line-height: 1.65;
-    color: #1a1a1a;
-  }
-  .prose a { color: var(--teal); }
-  .prose .highlight { font-weight: 700; color: var(--ink); }
-  .lede {
-    font-size: 27px;
-    font-weight: 600;
-    line-height: 1.35;
-    letter-spacing: -0.01em;
-    color: var(--ink);
-    max-width: 640px;
-    margin-bottom: 18px;
-  }
-  .facts--section {
-    margin-top: 36px;
-    max-width: 680px;
-  }
-  .facts--section .fact-label { color: var(--teal); opacity: 1; }
-  .facts--section .fact-value { color: var(--ink); }
-  .advisors {
-    margin-top: 20px;
-    font-size: 15px;
-    color: var(--ink-soft);
-    max-width: 680px;
-  }
-  .advisors a { color: var(--teal); text-decoration: underline; }
+  .founder-bg { font-size: 13px; color: var(--ink-soft); }
 
   footer {
-    padding: 40px 48px;
+    padding: 32px 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -215,12 +220,17 @@
     color: var(--ink-soft);
   }
 
-  @media (max-width: 720px) {
-    header, .hero, section, footer { padding-left: 24px; padding-right: 24px; }
+  @media (max-width: 860px) {
+    header { padding: 18px 24px; }
     nav { display: none; }
-    .hero h1 { font-size: 40px; }
+    .layout { flex-direction: column; }
+    .hero-panel { position: static; height: auto; flex: none; max-width: none; width: 100%; padding: 56px 24px; }
+    .hero-content h1 { font-size: 28px; }
+    .entry { padding: 64px 24px; max-width: none; }
+    .founders-section { padding: 64px 24px; }
     .founders-grid { grid-template-columns: 1fr; }
-    .facts { flex-direction: column; gap: 20px; }
+    .founders-facet { width: 220px; height: 220px; }
+    footer { padding: 28px 24px; flex-direction: column; gap: 8px; align-items: flex-start; }
   }
 </style>
 </head>
@@ -239,30 +249,97 @@
   <a class="book-demo" href="#">Book a demo ↗</a>
 </header>
 
-<section class="hero" style="border-bottom:none; padding-bottom:120px;">
-  <div class="hero-texture"></div>
-  <div class="hero-inner">
-    <div class="eyebrow">About TrustAI</div>
-    <h1>Portable context<br>for AI inference.</h1>
-    <p>TrustAI works on optimizing prefilling computation, providing companies with the cheapest and fastest inference.</p>
-    <div class="facts">
-      <div>
-        <div class="fact-label">Focus</div>
-        <div class="fact-value">Portable context</div>
-      </div>
-      <div>
-        <div class="fact-label">Built for</div>
-        <div class="fact-value">Multi-model inference</div>
+<div class="layout">
+  <aside class="hero-panel">
+    <svg class="facet" viewBox="0 0 560 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <g stroke="rgba(255,255,255,0.22)" stroke-width="1.2" fill="none">
+        <path d="M120 70 L 380 150 L 460 340 L 200 380 Z" />
+        <path d="M120 70 L 200 380" />
+        <path d="M200 380 L 80 520 L 340 560 L 460 340" />
+        <path d="M80 520 L 340 560" />
+        <path d="M340 560 L 480 700 L 180 760 L 350 900" />
+        <path d="M480 700 L 350 900" />
+        <path d="M340 560 L 180 760" />
+      </g>
+      <g fill="rgba(255,255,255,0.85)">
+        <circle cx="120" cy="70" r="3" />
+        <circle cx="380" cy="150" r="3" />
+        <circle cx="460" cy="340" r="3" />
+        <circle cx="200" cy="380" r="3" />
+        <circle cx="80" cy="520" r="3" />
+        <circle cx="340" cy="560" r="3" />
+        <circle cx="480" cy="700" r="3" />
+        <circle cx="180" cy="760" r="3" />
+        <circle cx="350" cy="900" r="3" />
+      </g>
+    </svg>
+    <div class="hero-content">
+      <div class="eyebrow">About TrustAI</div>
+      <h1>TrustAI works on optimizing prefilling computation, providing companies with the cheapest and fastest inference.</h1>
+      <div class="stat-list">
+        <div class="stat-row">
+          <div class="stat-label">Focus</div>
+          <div class="stat-value">Portable context</div>
+        </div>
+        <div class="stat-row">
+          <div class="stat-label">Built for</div>
+          <div class="stat-value">Multi-model inference</div>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </aside>
 
-<section>
-  <div class="section-head section-head--lg">
-    <span class="section-num"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M2 4 L10 12 L2 20" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 4 L20 12 L12 20" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-    <h2>Founders</h2>
-  </div>
+  <main class="content-col">
+    <section class="entry" id="team">
+      <div class="entry-head">
+        <span class="entry-num">01</span>
+        <h2>Team</h2>
+      </div>
+      <p>
+        TrustAI is built by a group of five MIT engineers and researchers with experience at <span class="highlight">Google DeepMind</span>, <span class="highlight">Jane Street</span>, <span class="highlight">SpaceX</span>, <span class="highlight">MIT Lincoln Laboratory</span>, and <span class="highlight">CSAIL</span>. The team includes <span class="highlight">International Physics and Astronomy Olympiad medalists</span> and has published at <span class="highlight">NeurIPS</span> and <span class="highlight">ICML</span>.
+      </p>
+      <p class="advisors">
+        Advised by the <a href="https://vllm.ai/" target="_blank" rel="noopener">vLLM</a> lead at Red Hat AI, <a href="https://www.linkedin.com/in/robert-shaw-1a01399a/" target="_blank" rel="noopener">Robert Shaw</a>, and a Google Distinguished Engineer in AI Infrastructure.
+      </p>
+    </section>
+
+    <section class="entry" id="vision">
+      <div class="entry-head">
+        <span class="entry-num">02</span>
+        <h2>Vision</h2>
+      </div>
+      <p>
+        Any model should be able to <span class="highlight">pick up where another left off</span>. We envision AI systems that <span class="highlight">move context across models without recomputing it</span>, making inference <span class="highlight">faster, cheaper, and more capable</span>.
+      </p>
+    </section>
+
+    <section class="entry" id="mission">
+      <div class="entry-head">
+        <span class="entry-num">03</span>
+        <h2>Mission</h2>
+      </div>
+      <p>
+        Make <span class="highlight">computed context transferable</span> across the open-weight ecosystem. We build infrastructure that <span class="highlight">transfers state between models</span>, so teams can use the best model for each task <span class="highlight">without paying the prefill cost twice</span>.
+      </p>
+    </section>
+  </main>
+</div>
+
+<section class="founders-section">
+  <svg class="founders-facet" viewBox="0 0 340 340" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <g stroke="rgba(255,255,255,0.22)" stroke-width="1.2" fill="none">
+      <path d="M60 260 L 180 80 L 300 140" />
+      <path d="M180 80 L 220 220 L 300 140" />
+      <path d="M60 260 L 220 220" />
+    </g>
+    <g fill="rgba(255,255,255,0.85)">
+      <circle cx="60" cy="260" r="3" />
+      <circle cx="180" cy="80" r="3" />
+      <circle cx="300" cy="140" r="3" />
+      <circle cx="220" cy="220" r="3" />
+    </g>
+  </svg>
+  <div class="section-label">Founders</div>
   <div class="founders-grid">
     <div class="founder-card">
       <div class="founder-photo">MV</div>
@@ -275,51 +352,6 @@
       <h3><a href="https://www.linkedin.com/in/hannahchung1/" target="_blank" rel="noopener">Hannah Chung ↗</a></h3>
       <div class="founder-role">CEO</div>
       <div class="founder-bg">CS + Business @ MIT</div>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="section-head section-head--lg">
-    <span class="section-num"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M2 4 L10 12 L2 20" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 4 L20 12 L12 20" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-    <h2>Team</h2>
-  </div>
-  <p class="prose">
-    TrustAI is built by five MIT engineers and researchers with backgrounds at <span class="highlight">Google DeepMind</span>, <span class="highlight">Jane Street</span>, <span class="highlight">SpaceX</span>, <span class="highlight">MIT Lincoln Laboratory</span>, and <span class="highlight">CSAIL</span>. The team includes <span class="highlight">International Physics and Astronomy Olympiad medalists</span>, with published work at <span class="highlight">NeurIPS</span> and <span class="highlight">ICML</span>.
-  </p>
-  <p class="advisors">
-    Advised by <a href="https://vllm.ai/" target="_blank" rel="noopener">vLLM</a> lead at Red Hat AI, <a href="https://www.linkedin.com/in/robert-shaw-1a01399a/" target="_blank" rel="noopener">Robert Shaw</a>, and a Google Distinguished Engineer in AI Infrastructure.
-  </p>
-</section>
-
-<section>
-  <div class="section-head section-head--lg">
-    <span class="section-num"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M2 4 L10 12 L2 20" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 4 L20 12 L12 20" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-    <h2>Vision</h2>
-  </div>
-  <p class="lede">Every model should pick up exactly where the last one left off.</p>
-  <p class="prose">
-    We're building toward AI systems that <span class="highlight">move context across models without recomputing it</span> — making inference <span class="highlight">faster, cheaper, and more capable</span> with every hop.
-  </p>
-</section>
-
-<section style="border-bottom: none;">
-  <div class="section-head section-head--lg">
-    <span class="section-num"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M2 4 L10 12 L2 20" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 4 L20 12 L12 20" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-    <h2>Mission</h2>
-  </div>
-  <p class="lede">Make computed context transferable across the open-weight ecosystem.</p>
-  <p class="prose">
-    We build infrastructure that <span class="highlight">transfers state between models</span>, so teams can use the <span class="highlight">best model for every task</span> without paying the prefill cost twice.
-  </p>
-  <div class="facts facts--section">
-    <div>
-      <div class="fact-label">Prefill cost</div>
-      <div class="fact-value">Paid once, reused everywhere</div>
-    </div>
-    <div>
-      <div class="fact-label">Time-to-first-token</div>
-      <div class="fact-value">A fraction of standard inference</div>
     </div>
   </div>
 </section>

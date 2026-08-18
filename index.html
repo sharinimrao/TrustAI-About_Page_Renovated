@@ -11,6 +11,7 @@
     --ink: #000000;
     --paper: #ffffff;
     --teal: #377e7f;
+    --teal-deep: #306f70;
     --teal-soft: #e9f1f1;
     --line: #e3e6ea;
     --ink-soft: #545b63;
@@ -78,8 +79,13 @@
   }
   .facts {
     display: flex;
-    gap: 48px;
+    gap: 40px;
     margin-top: 48px;
+    width: fit-content;
+    border: 1px solid rgba(255,255,255,0.35);
+    background: rgba(255,255,255,0.08);
+    border-radius: 10px;
+    padding: 18px 26px;
   }
   .fact-label {
     font-family: 'IBM Plex Mono', monospace;
@@ -90,22 +96,30 @@
     margin-bottom: 6px;
   }
   .fact-value { font-size: 17px; font-weight: 600; }
-  .lines { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+  .hero-texture {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background-image: radial-gradient(rgba(255,255,255,0.16) 1px, transparent 1px);
+    background-size: 20px 20px;
+    -webkit-mask-image: radial-gradient(ellipse 65% 90% at 82% 45%, black 10%, transparent 72%);
+    mask-image: radial-gradient(ellipse 65% 90% at 82% 45%, black 10%, transparent 72%);
+  }
 
   /* Founders */
   section { padding: 88px 48px; border-bottom: 1px solid var(--line); }
   .section-head {
     display: flex;
-    align-items: baseline;
+    align-items: center;
     gap: 16px;
     margin-bottom: 48px;
   }
   .section-num {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 17px;
+    display: inline-flex;
     color: var(--teal);
-    font-weight: 600;
   }
+  .section-num svg { display: block; width: 26px; height: 20px; }
   .section-head h2 {
     font-size: 15px;
     text-transform: uppercase;
@@ -127,37 +141,38 @@
     max-width: 780px;
   }
   .founder-card {
-    border: 1px solid var(--line);
+    background: var(--teal-deep);
+    border: 1px solid var(--teal-deep);
     border-radius: 16px;
     padding: 28px;
     transition: border-color 0.15s;
   }
-  .founder-card:hover { border-color: var(--teal); }
+  .founder-card:hover { border-color: rgba(255,255,255,0.5); }
   .founder-photo {
     width: 100%;
     aspect-ratio: 4 / 3;
     border-radius: 12px;
-    background: var(--teal-soft);
-    border: 1px solid var(--line);
+    background: rgba(255,255,255,0.22);
+    border: 1px solid rgba(255,255,255,0.4);
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: 'IBM Plex Mono', monospace;
     font-weight: 600;
-    color: var(--teal);
+    color: rgba(255,255,255,0.9);
     font-size: 32px;
     margin-bottom: 20px;
   }
   .founder-card h3 { font-size: 19px; font-weight: 700; margin-bottom: 4px; }
-  .founder-card h3 a { color: var(--ink); text-decoration: none; }
+  .founder-card h3 a { color: white; text-decoration: none; }
   .founder-role {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 12px;
-    color: var(--teal);
+    color: rgba(255,255,255,0.85);
     letter-spacing: 0.05em;
     margin-bottom: 10px;
   }
-  .founder-bg { font-size: 14px; color: var(--ink-soft); }
+  .founder-bg { font-size: 14px; color: rgba(255,255,255,0.7); }
 
   /* Team / Vision / Mission */
   .prose {
@@ -168,6 +183,21 @@
   }
   .prose a { color: var(--teal); }
   .prose .highlight { font-weight: 700; color: var(--ink); }
+  .lede {
+    font-size: 27px;
+    font-weight: 600;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    max-width: 640px;
+    margin-bottom: 18px;
+  }
+  .facts--section {
+    margin-top: 36px;
+    max-width: 680px;
+  }
+  .facts--section .fact-label { color: var(--teal); opacity: 1; }
+  .facts--section .fact-value { color: var(--ink); }
   .advisors {
     margin-top: 20px;
     font-size: 15px;
@@ -210,21 +240,7 @@
 </header>
 
 <section class="hero" style="border-bottom:none; padding-bottom:120px;">
-  <svg class="lines" viewBox="0 0 1400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-    <g stroke="rgba(255,255,255,0.28)" stroke-width="1.5" fill="none">
-      <path d="M1080 30 L 1280 220 L 1000 300" />
-      <path d="M1280 220 L 1180 440" />
-      <path d="M1000 300 L 1180 440 L 880 500" />
-      <path d="M1080 30 L 1000 300" />
-      <path d="M1280 220 L 1400 120" />
-    </g>
-    <g fill="rgba(255,255,255,0.9)">
-      <circle cx="1080" cy="30" r="3" />
-      <circle cx="1280" cy="220" r="3" />
-      <circle cx="1000" cy="300" r="3" />
-      <circle cx="1180" cy="440" r="3" />
-    </g>
-  </svg>
+  <div class="hero-texture"></div>
   <div class="hero-inner">
     <div class="eyebrow">About TrustAI</div>
     <h1>Portable context<br>for AI inference.</h1>
@@ -244,7 +260,7 @@
 
 <section>
   <div class="section-head section-head--lg">
-    <span class="section-num">→</span>
+    <span class="section-num"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M2 4 L10 12 L2 20" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 4 L20 12 L12 20" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
     <h2>Founders</h2>
   </div>
   <div class="founders-grid">
@@ -265,7 +281,7 @@
 
 <section>
   <div class="section-head section-head--lg">
-    <span class="section-num">→</span>
+    <span class="section-num"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M2 4 L10 12 L2 20" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 4 L20 12 L12 20" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
     <h2>Team</h2>
   </div>
   <p class="prose">
@@ -278,22 +294,34 @@
 
 <section>
   <div class="section-head section-head--lg">
-    <span class="section-num">→</span>
+    <span class="section-num"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M2 4 L10 12 L2 20" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 4 L20 12 L12 20" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
     <h2>Vision</h2>
   </div>
+  <p class="lede">Every model should pick up exactly where the last one left off.</p>
   <p class="prose">
-    Any model should be able to <span class="highlight">pick up where another left off</span>. We're building toward AI systems that <span class="highlight">move context across models without recomputing it</span> — making inference <span class="highlight">faster, cheaper, and more capable</span> with every hop.
+    We're building toward AI systems that <span class="highlight">move context across models without recomputing it</span> — making inference <span class="highlight">faster, cheaper, and more capable</span> with every hop.
   </p>
 </section>
 
 <section style="border-bottom: none;">
   <div class="section-head section-head--lg">
-    <span class="section-num">→</span>
+    <span class="section-num"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M2 4 L10 12 L2 20" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 4 L20 12 L12 20" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
     <h2>Mission</h2>
   </div>
+  <p class="lede">Make computed context transferable across the open-weight ecosystem.</p>
   <p class="prose">
-    Make <span class="highlight">computed context transferable</span> across the open-weight ecosystem. We build infrastructure that <span class="highlight">transfers state between models</span>, so teams can use the <span class="highlight">best model for every task</span> without paying the prefill cost twice — delivering inference at a <span class="highlight">fraction of the cost and time-to-first-token</span>.
+    We build infrastructure that <span class="highlight">transfers state between models</span>, so teams can use the <span class="highlight">best model for every task</span> without paying the prefill cost twice.
   </p>
+  <div class="facts facts--section">
+    <div>
+      <div class="fact-label">Prefill cost</div>
+      <div class="fact-value">Paid once, reused everywhere</div>
+    </div>
+    <div>
+      <div class="fact-label">Time-to-first-token</div>
+      <div class="fact-value">A fraction of standard inference</div>
+    </div>
+  </div>
 </section>
 
 <footer>
